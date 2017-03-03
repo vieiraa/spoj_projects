@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 
 typedef struct node {
     int data;
@@ -13,10 +12,6 @@ typedef struct {
 } list_t;
 
 void create(list_t *);
-int empty(list_t);
-int size(list_t);
-int data(list_t, int, int *);
-int position(list_t, int);
 int insert(list_t *, int, int);
 int del(list_t *, int);
 void print(list_t);
@@ -58,6 +53,7 @@ int main() {
         print(list);
     }
 
+
     destroy(&list);
 
     return 0;
@@ -68,60 +64,19 @@ void create(list_t *list) {
     list->size = 0;
 }
 
-int empty(list_t list) {
-    if (!(list.size))
-        return 1;
-    else
-        return 0;
-}
-
-int size(list_t list) {
-    return (list.size);
-}
-
-int data(list_t list, int pos, int *data) {
-    node_t *p = list.head;
-
-    if ((pos > list.size - 1) || p == NULL)
-        return 0;
-    else {
-        for (int i = 0; i < pos; i++)
-            p = p->next;
-
-        *data = p->data;
-    }
-
-    return 1;
-}
-
-int position(list_t list, int data) {
-    node_t *p = list.head;
-
-    if (p == NULL)
-        return -2;
-    else {
-        for (int i = 0; i < list.size; i++) {
-            if (p->data == data)
-                return i;
-        }
-    }
-
-    return -1;
-}
-
 int insert(list_t *list, int pos, int data) {
     node_t *p, *aux = list->head;
 
     p = (node_t *) malloc(sizeof(node_t));
 
-    if (!pos){
+    if (!pos || (!aux && pos > list->size)){
         p->data = data;
         p->next = aux;
         list->head = p;
     }
 
     else if (pos >= list->size) {
-        while (aux->next)
+        for (int i = 0; i < list->size - 1; i++)
             aux = aux->next;
 
         p->data = data;
@@ -161,11 +116,15 @@ int del(list_t *list, int pos) {
             }
 
             aux->next = p->next;
+            //if (!p || !aux)
+            //    printf("p ou aux ta nulo\n");
+            //else if (!p->next)
+            //    printf("p->next ta nulo\n");
         }
 
-        list->size--;
-        free(p);
     }
+    free(p);
+    list->size--;
 
     return 1;
 }
