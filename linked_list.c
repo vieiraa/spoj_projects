@@ -65,32 +65,32 @@ void create(list_t *list) {
 }
 
 int insert(list_t *list, int pos, int data) {
-    node_t *p, *aux = list->head;
+    node_t *new, *aux = list->head;
 
-    p = (node_t *) malloc(sizeof(node_t));
+    new = (node_t *) malloc(sizeof(node_t));
 
     if (!pos || (!aux && pos > list->size)){
-        p->data = data;
-        p->next = aux;
-        list->head = p;
+        new->data = data;
+        new->next = aux;
+        list->head = new;
     }
 
     else if (pos >= list->size) {
         for (int i = 0; i < list->size - 1; i++)
             aux = aux->next;
 
-        p->data = data;
-        p->next = NULL;
-        aux->next = p;
+        new->data = data;
+        new->next = NULL;
+        aux->next = new;
     }
 
     else {
         for(int i = 0; i < pos - 1; i++)
             aux = aux->next;
 
-        p->data = data;
-        p->next = aux->next;
-        aux->next = p;
+        new->data = data;
+        new->next = aux->next;
+        aux->next = new;
     }
 
     list->size++;
@@ -116,11 +116,7 @@ int del(list_t *list, int pos) {
             }
 
             aux->next = p->next;
-            //if (!p || !aux)
-            //    printf("p ou aux ta nulo\n");
-            //else if (!p->next)
-            //    printf("p->next ta nulo\n");
-        }
+    }
 
     }
     free(p);
