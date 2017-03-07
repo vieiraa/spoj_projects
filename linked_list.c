@@ -53,7 +53,6 @@ int main() {
         print(list);
     }
 
-
     destroy(&list);
 
     return 0;
@@ -69,7 +68,7 @@ int insert(list_t *list, int pos, int data) {
 
     new = (node_t *) malloc(sizeof(node_t));
 
-    if (!pos || (!aux && pos > list->size)){
+    if (!pos || (!aux && pos > list->size)) {
         new->data = data;
         new->next = aux;
         list->head = new;
@@ -116,9 +115,10 @@ int del(list_t *list, int pos) {
             }
 
             aux->next = p->next;
-    }
+        }
 
     }
+
     free(p);
     list->size--;
 
