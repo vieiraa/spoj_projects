@@ -1,16 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include <stdint.h>
 
 typedef unsigned long long uint64_t;
 
-typedef struct {
+typedef struct node {
     uint64_t key;
     uint64_t prev;
     uint64_t next;
-} list_t;
+} node_t;
 
-int search(list_t list[], int size, uint64_t key) {
+int search(node_t list[], int size, uint64_t key) {
     int i;
 
     for (i = 0; i < size; i++)
@@ -21,55 +20,51 @@ int search(list_t list[], int size, uint64_t key) {
 }
 
 int main() {
-    list_t list[20];
-    uint64_t key[2], prev[2], next[2], keyTmp, prevTmp, nextTmp;
-    int size = 2, flag = 1;
+    node_t *list = (node_t *) malloc(sizeof(node_t));
+    uint64_t key, prev, next;
+    node_t ptr1, ptr2;
+    int size = 0, flag = 1;
 
-    for (int i = 0; i < 2; i++) {
-        scanf(" %llx %llx %llx", &key[i], &prev[i], &next[i]);
-
-        list[i].key = key[i];
-        list[i].prev = prev[i];
-        list[i].next = next[i];
-    }
-
-    while (scanf(" %llx %llx %llx", &keyTmp, &prevTmp, &nextTmp) == 3) {
-        list[size].key = keyTmp;
-        list[size].prev = prevTmp;
-        list[size].next = nextTmp;
-
+    while (scanf(" %llx %llx %llx", &key, &prev, &next) == 3) {
         size++;
+        list = (node_t *) realloc(list, size * sizeof(node_t));
+
+        list[size - 1].key = key;
+        list[size - 1].prev = prev;
+        list[size - 1].next = next;
+
+        if (size == 1)
+            ptr1 = list[size - 1];
+        else if (size == 2)
+            ptr2 = list[size - 1];
     }
 
-    keyTmp = key[0];
+    key = ptr1.key;
 
     do {
-        if (!keyTmp) {
-            flag = 0;
-            break;
-        }
+        int i = search(list, size, key);
 
-        int i = search(list, size, keyTmp);
-
-        list_t aux1 = list[i];
+        node_t aux1 = list[i];
 
         i = search(list, size, aux1.next);
 
-        list_t aux2 = list[i];
+        node_t aux2 = list[i];
 
-        if (keyTmp == aux2.prev) {
-            keyTmp = aux1.next;
+        if (key == aux2.prev) {
+            key = aux1.next;
         }
         else {
             flag = 0;
             break;
         }
-    } while (keyTmp != key[1]);
+    } while (key != ptr2.key);
 
     if (flag)
         printf("sana\n");
     else
         printf("insana\n");
+
+    free(list);
 
     return 0;
 }
