@@ -20,19 +20,11 @@ int search(list_t list[], int size, uint64_t key) {
 }
 
 int main() {
-    list_t *list = (list_t *) malloc(2 * sizeof(list_t));
-    uint64_t key[2], prev[2], next[2], keyTmp, prevTmp, nextTmp;
-    int size = 2, flag = 1;
+    list_t *list = (list_t *) malloc(sizeof(list_t));
+    uint64_t keyTmp, prevTmp, nextTmp, ptr1, ptr2;
+    int size = 0, flag = 1;
     list_t aux1;
     int i = 0;
-
-    for (int i = 0; i < 2; i++) {
-        scanf(" %llx %llx %llx", &key[i], &prev[i], &next[i]);
-
-        list[i].key = key[i];
-        list[i].prev = prev[i];
-        list[i].next = next[i];
-    }
 
     while (scanf(" %llx %llx %llx", &keyTmp, &prevTmp, &nextTmp) == 3) {
         size++;
@@ -43,7 +35,10 @@ int main() {
         list[size-1].next = nextTmp;
     }
 
-    keyTmp = key[0];
+    ptr1 = list[0].key;
+    ptr2 = list[1].key;
+
+    keyTmp = ptr1;
 
     do {
         if (!keyTmp) {
@@ -62,7 +57,7 @@ int main() {
             flag = 0;
             break;
         }
-    } while (keyTmp != key[1]);
+    } while (keyTmp != ptr2);
 
     if (flag)
         printf("sana\n");
