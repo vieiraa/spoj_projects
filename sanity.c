@@ -10,16 +10,6 @@ typedef struct node {
     uint64_t next;
 } node_t;
 
-int search(node_t list[], int size, uint64_t key) {
-    int i;
-
-    for (i = 0; i < size; i++)
-        if (list[i].key == key)
-            return i;
-
-    return 0;
-}
-
 int main() {
     node_t *list = (node_t *) malloc(sizeof(node_t));
     uint64_t key, prev, next;
