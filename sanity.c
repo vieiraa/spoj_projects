@@ -41,11 +41,6 @@ int main() {
     keyTmp = ptr1;
 
     do {
-        if (!keyTmp) {
-            flag = 0;
-            break;
-        }
-
         aux1 = list[i];
 
         i = search(list, size, aux1.next);
