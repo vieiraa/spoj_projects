@@ -60,7 +60,7 @@ int insert(list_t *list, int pos, int data) {
 
     if (!new)
         return 0;
-        
+
     new->data = data;
 
     if (!aux && !pos) {
@@ -75,9 +75,9 @@ int insert(list_t *list, int pos, int data) {
         new->next = aux;
         aux->prev = new;
         list->head = new;
-        
+
         aux = list->head;
-        
+
         for (int i = 0; i < list->size; i++) {
             aux = aux->next;
         }
