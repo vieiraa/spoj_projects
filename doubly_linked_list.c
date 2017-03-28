@@ -85,8 +85,17 @@ int insert(list_t *list, int pos, int data) {
         list->tail = aux;
     }
 
+    else if (pos >= list->size) {
+        aux = list->tail;
 
-    else if (pos >= (list->size / 2) + 1) {
+        new->prev = aux;
+        new->next = NULL;
+        aux->next = new;
+        list->tail = new;
+    }
+
+
+    else if (pos > (list->size / 2) + 1) {
         aux = list->tail;
 
          for(int i = list->size; i > pos - 1; i--) {
@@ -95,7 +104,7 @@ int insert(list_t *list, int pos, int data) {
 
         new->prev = aux->prev;
         aux->prev->next = new;
-        aux->prev = new;
+        aux->next = new;
         new->next = aux;
     }
 
@@ -105,7 +114,7 @@ int insert(list_t *list, int pos, int data) {
 
         new->next = aux->next;
         aux->next->prev = new;
-        aux->prev = new;
+        aux->next = new;
         new->prev = aux;
     }
 
@@ -123,6 +132,11 @@ int del(list_t *list, int pos) {
     else {
         if (!pos) {
             list->head = p->next;
+        }
+
+        else if (list->size == 1 && !pos) {
+            list->head = NULL;
+            list->tail = NULL;
         }
 
         else if (pos == list->size - 1){
