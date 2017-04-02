@@ -16,7 +16,7 @@ char pop(stack_t *);
 int main() {
     stack_t stack;
     int t, i;
-    char op[MAX], str[MAX], cur;
+    char op[MAX], result[MAX], curChar;
 
     create(&stack);
 
@@ -28,32 +28,32 @@ int main() {
         int j = 0;
 
         for (int i = 0; i < strlen(op); i++) {
-            cur = op[i];
+            curChar = op[i];
 
-            if (cur == '(')
+            if (curChar == '(')
                 continue;
 
-            switch (cur) {
+            switch (curChar) {
                 case '^':
                 case '/':
                 case '*':
                 case '-':
                 case '+':
-                    push(&stack, cur);
+                    push(&stack, curChar);
                     break;
 
                 case ')':
-                    str[j++] = pop(&stack);
-                    str[j] = '\0';
+                    result[j++] = pop(&stack);
+                    result[j] = '\0';
                     break;
 
                 default:
-                    str[j++] = cur;
+                    result[j++] = curChar;
                     break;
             }
         }
 
-        printf("%s\n", str);
+        printf("%s\n", result);
     }
 
     return 0;
