@@ -28,6 +28,11 @@ public:
     }
 
     int insert(string s) {
+        for (int i = 0; i < 101; i++) {
+            if (hashTable[i] == s || size > 100)
+                return 0;
+        }
+        
         int pos = hashKey(s);
 
         for (int i = 1; i < 20; pos = (hashKey(s) + (i*i) + (23 * i) % 101), i++) {
@@ -43,10 +48,14 @@ public:
     }
 
     int remove(string s) {
-        int pos = hashKey(s);
-
-        if (pos < 0)
-            return 0;
+        int pos;
+        
+        for (int i = 0; i < 101; i++) {
+            if (hashTable[i] == s)
+                pos = i;
+            else
+                return 0;
+        }
 
         hashTable[pos] = "empty";
         size--;
@@ -55,11 +64,11 @@ public:
     }
 
     void print() {
-        cout << size << endl;
+        cout << endl << size;
 
         for (int i = 0; i < 101; i++) {
             if (hashTable[i] != "empty")
-                cout << i << ":" << hashTable[i] << endl;
+                cout << endl << i << ":" << hashTable[i];
         }
     }
 
@@ -68,27 +77,27 @@ public:
 int main() {
     Hash h;
     int t, n;
-    char op[30], key[30];
+    string op, key;
 
     cin >> t;
+    cin.ignore();
 
     do {
         cin >> n;
-
+        cin.ignore();
+        
         do {
-            scanf(" %3s:", op);
-            scanf(" %s", key);
+            cin >> op;
+            cin.ignore();
+            
+            key = op.substr(4, op.size());
 
-            string s(key);
-
-            switch(op[0]) {
-                case 'A':
-                    h.insert(s);
-                    break;
-
-                case 'D':
-                    h.remove(s);
-            }
+            if (op[0] == 'A')
+                if (!(key == ""))
+                    h.insert(key);
+            else
+                if (!(key == ""))
+                    h.remove(key);
         } while (--n);
 
         h.print();
