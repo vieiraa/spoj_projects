@@ -5,7 +5,7 @@ class Hash
     def hash_key(s)
         pos = 0
 
-        (0...s.to_s.size).each do |i|
+        (0...s.to_s.length).each do |i|
             pos += s[i].to_s.ord * (i+1)
         end
 
@@ -42,7 +42,7 @@ class Hash
     end
 
     def insert(s)
-        if @@size > 100 or find(s.to_s) > 0 then
+        if @@size > 100 or find(s.to_s) > -1 then
             return 0
         end
 
@@ -52,7 +52,7 @@ class Hash
         for i in 1..20 do
             if @@hash_table[pos] == "empty" then
                 @@hash_table[pos] = s
-                @@size = @@size + 1
+                @@size += 1
 
                 return 1
             end
@@ -82,11 +82,11 @@ class Hash
     end
 
     def show
-        print "\n#{@@size}"
+        puts "#{@@size}"
 
         for i in 0..100 do
             if @@hash_table[i] != "empty" then
-                print "\n#{i}:#{@@hash_table[i]}"
+                puts "#{i}:#{@@hash_table[i]}"
             end
         end
     end
@@ -101,6 +101,13 @@ t = gets.chomp.to_i
 
     (0...n).each do
         op = gets.chomp
+
+        while op.empty? do
+            op = gets.chomp
+        end
+
+        op.chomp!(' ')
+
         key = op[4, op.size]
 
         if op[0] == "A" then
