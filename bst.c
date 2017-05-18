@@ -9,7 +9,7 @@ typedef struct node {
 
 typedef node_t *bst_t;
 
-long counter;
+long long counter = 0;
 
 void create(bst_t *);
 int insert(bst_t *, int);
@@ -27,7 +27,7 @@ int main() {
 
         insert(&tree, data);
 
-        printf("%d\n", counter);
+        fprintf(stderr, "%lld\n", counter);
     }
 
     return 0;
